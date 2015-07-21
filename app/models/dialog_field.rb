@@ -56,16 +56,6 @@ class DialogField < ActiveRecord::Base
     "DialogFieldRadioButton"     => "Radio Button"
   }
 
-  DIALOG_FIELD_DYNAMIC_CLASSES = %w(
-    DialogFieldCheckBox
-    DialogFieldDateControl
-    DialogFieldDateTimeControl
-    DialogFieldDropDownList
-    DialogFieldRadioButton
-    DialogFieldTextAreaBox
-    DialogFieldTextBox
-  )
-
   def self.dialog_field_types
     DIALOG_FIELD_TYPES
   end

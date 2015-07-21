@@ -48,13 +48,12 @@
           &nbsp;
           = _('Only 1 Date or Date/Time element can be present in a Dialog')
 
-    - if DialogField::DIALOG_FIELD_DYNAMIC_CLASSES.include?(@edit[:field_typ])
-      .form-group
-        %label.col-md-2.control-label
-          = _('Dynamic')
-        .col-md-8
-          = check_box_tag('field_dynamic', '1', @edit[:field_dynamic],
-                          "data-miq_observe_checkbox" => {:url => url}.to_json)
+    .form-group
+      %label.col-md-2.control-label
+        = _('Dynamic')
+      .col-md-8
+        = check_box_tag('field_dynamic', '1', @edit[:field_dynamic],
+                        "data-miq_observe_checkbox" => {:url => url}.to_json)
 
   - unless @edit[:field_typ].nil?
     %h3
