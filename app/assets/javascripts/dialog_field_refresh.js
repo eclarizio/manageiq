@@ -92,6 +92,28 @@ var dialogFieldRefresh = {
     });
   },
 
+  refreshTagControl: function(fieldName, fieldId) {
+    miqSparkleOn();
+
+    $.post('dynamic_tag_control_refresh', {name: fieldName}, function(data) {
+      var tagControlOptions = [];
+
+      $.each(data.values.refreshed_values, function(index, value) {
+        var option = '<option ';
+        option += 'value="' + value.id + '" ';
+        if (index === 0) {
+          option += 'selected="selected" ';
+        }
+        option += '> ' + value.description + '</option>';
+        tagControlOptions.push(option);
+      });
+
+      $('.dynamic-drop-down-' + fieldId).html(tagControlOptions);
+
+      miqSparkle(false);
+    });
+  },
+
   refreshTextAreaBox: function(fieldName, fieldId) {
     miqSparkleOn();
 

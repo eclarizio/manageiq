@@ -172,6 +172,10 @@ module ApplicationController::DialogRunner
     refresh_for_textbox_checkbox_or_date
   end
 
+  def dynamic_tag_control_refresh
+    refresh_for_textbox_checkbox_or_date
+  end
+
   private     #######################
 
   def refresh_for_textbox_checkbox_or_date

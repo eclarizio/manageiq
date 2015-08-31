@@ -1,0 +1,32 @@
+- category_tags = DialogFieldTagControl.category_tags(field.category).map { |cat| [cat[:description], cat[:id]] }
+- if edit
+  - if field.single_value?
+    - select_values = dialog_dropdown_select_values(field, wf.value(field.name), category_tags)
+    = select_tag(field.name,
+                 options_for_select(select_values, wf.value(field.name)),
+                 drop_down_options(field, url))
+  - else
+    = select_tag(field.name,
+                 options_for_select(category_tags, wf.value(field.name)),
+                 drop_down_options(field, url).merge(:multiple => true))
+
+- else
+  - value = wf.value(field.name) || ''
+  - classification_ids = value.split(',')
+  = h(Classification.where(:id => classification_ids).collect(&:description).join(', '))
+
+- if field.dynamic
+  - if field.auto_refresh
+    :javascript
+      dialogFieldRefresh.listenForAutoRefreshMessages("#{field.id}", function() {
+        dialogFieldRefresh.refreshTagControl("#{field.name}", "#{field.id}");
+      });
+
+  -if field.show_refresh_button?
+    = button_tag(_('Refresh'), :id => "refresh-dynamic-field-#{field.id}", :class => "btn btn-default")
+
+    :javascript
+      $('#refresh-dynamic-field-#{field.id}').click(function() {
+        dialogFieldRefresh.refreshTagControl("#{field.name}", "#{field.id}");
+        dialogFieldRefresh.triggerAutoRefresh("#{field.id}", "#{field.trigger_auto_refresh}");
+      });

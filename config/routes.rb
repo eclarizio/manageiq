@@ -40,6 +40,7 @@ Vmdb::Application.routes.draw do
     dynamic_date_refresh
     dynamic_radio_button_refresh
     dynamic_text_box_refresh
+    dynamic_tag_control_refresh
   )
 
   discover_get_post = %w(

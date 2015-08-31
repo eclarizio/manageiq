@@ -6,6 +6,7 @@ shared_examples_for "A controller that has dialog runner routes" do
     dynamic_date_refresh
     dynamic_radio_button_refresh
     dynamic_text_box_refresh
+    dynamic_tag_control_refresh
   ).each do |path|
     describe "##{path}" do
       it "routes with POST" do
