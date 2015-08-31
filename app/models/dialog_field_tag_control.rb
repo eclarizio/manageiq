@@ -1,4 +1,5 @@
 class DialogFieldTagControl < DialogFieldSortedItem
+  AUTOMATE_VALUE_FIELDS = %w(category force_single_value sort_by sort_order data_type required read_only)
 
   def category=(id)
     self.options[:category_id] = id
@@ -47,6 +48,8 @@ class DialogFieldTagControl < DialogFieldSortedItem
   end
 
   def values
+    values_from_automate if dynamic?
+
     category = Classification.where(:id => self.category).first
     return [] if category.nil?
 
@@ -76,4 +79,19 @@ class DialogFieldTagControl < DialogFieldSortedItem
     MiqAeEngine.create_automation_attribute_array_key(super)
   end
 
+  def normalize_automate_values(automate_hash)
+    self.class::AUTOMATE_VALUE_FIELDS.each do |key|
+      send("#{key}=", automate_hash[key]) if automate_hash.key?(key)
+    end
+  end
+
+  def refresh_json_value
+    {:refreshed_values => values}
+  end
+
+  private
+
+  def values_from_automate
+    DynamicDialogFieldValueProcessor.values_from_automate(self)
+  end
 end
