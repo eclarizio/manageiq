@@ -102,24 +102,47 @@ describe DialogFieldDateTimeControl do
   end
 
   describe "#refresh_json_value" do
-    let(:dialog_field) { described_class.new }
+    let(:dialog_field) { described_class.new(:dynamic => dynamic) }
 
     before do
       allow(described_class).to receive(:server_timezone).and_return("UTC")
-      allow(DynamicDialogFieldValueProcessor).to receive(:values_from_automate).with(dialog_field).and_return("2015-02-03T18:50:00Z")
     end
 
-    it "returns the default value in a hash" do
-      expect(dialog_field.refresh_json_value).to eq(
-        :date => "02/03/2015",
-        :hour => "18",
-        :min  => "50"
-      )
+    context "when the field is dynamic" do
+      let(:dynamic) { true }
+
+      before do
+        allow(DynamicDialogFieldValueProcessor).to receive(:values_from_automate).with(dialog_field).and_return("2015-02-03T18:50:00Z")
+      end
+
+      it "returns the default value in a hash" do
+        expect(dialog_field.refresh_json_value).to eq(
+          :date => "02/03/2015",
+          :hour => "18",
+          :min  => "50"
+        )
+      end
+
+      it "assigns the processed value to value" do
+        dialog_field.refresh_json_value
+        expect(dialog_field.value).to eq("02/03/2015 18:50")
+      end
     end
 
-    it "assigns the processed value to value" do
-      dialog_field.refresh_json_value
-      expect(dialog_field.value).to eq("02/03/2015 18:50")
+    context "when the field is not dynamic" do
+      let(:dynamic) { false }
+
+      before do
+        dialog_field.value = "01/02/2016 12:34"
+      end
+
+      it "returns the assigned value in a hash" do
+        expect(dialog_field.refresh_json_value).to eq(
+          :date => "01/02/2016",
+          :hour => "12",
+          :min  => "34"
+        )
+      end
     end
   end
 end

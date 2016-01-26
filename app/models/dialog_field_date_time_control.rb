@@ -13,7 +13,7 @@ class DialogFieldDateTimeControl < DialogFieldDateControl
   end
 
   def refresh_json_value
-    @value = values_from_automate
+    @value = values_from_automate if dynamic
 
     date_time_value = with_current_user_timezone { Time.parse(@value) }
 
