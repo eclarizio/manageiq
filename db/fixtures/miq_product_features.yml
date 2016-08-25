@@ -2024,6 +2024,12 @@
           :hidden: true
           :identifier: ab_button_simulate
 
+# Automate Generic Objects
+- :name: Generic Object
+  :description: Generic Objects
+  :feature_type: node
+  :identifier: generic_object_explorer
+
 # Automate Import/Export
 - :name: Import/Export
   :description: Automate Import/Export

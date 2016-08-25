@@ -6,6 +6,10 @@ class ApplicationHelper::ToolbarBuilder
     build_toolbar(toolbar_name)
   end
 
+  def call_by_class(toolbar_class)
+    build(toolbar_class)
+  end
+
   private
 
   delegate :request, :current_user, :to => :@view_context
@@ -611,6 +615,7 @@ class ApplicationHelper::ToolbarBuilder
 
     # don't check for feature RBAC if id is miq_request_approve/deny
     unless %w(miq_policy catalogs).include?(@layout)
+    byebug if @layout == "generic_object"
       return true if !role_allows?(:feature => id) && !["miq_request_approve", "miq_request_deny"].include?(id) &&
                      id !~ /^history_\d*/ &&
                      !id.starts_with?("dialog_") && !id.starts_with?("miq_task_")

@@ -60,6 +60,7 @@ module Sandbox
     dialogs_tree
     event_tree
     export_tree
+    generic_object_explorer_tree
     images_filter_tree
     images_tree
     instances_filter_tree
@@ -112,8 +113,9 @@ module Sandbox
     cb_assignments
     cb_rates
     cb_reports
-    configuration_scripts
     condition
+    configuration_manager_providers
+    configuration_scripts
     containers
     containers_filter
     cs_filter
@@ -125,7 +127,7 @@ module Sandbox
     dialogs
     event
     export
-    configuration_manager_providers
+    generic_object_accordion
     images
     images_filter
     instances

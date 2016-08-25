@@ -369,43 +369,46 @@ module ApplicationHelper
   end
 
   def _toolbar_builder
-    ToolbarBuilder.new(
-      self,
-      binding,
-      :active                => @active,
-      :button_group          => @button_group,
-      :changed               => @changed,
-      :condition             => @condition,
-      :condition_policy      => @condition_policy,
-      :db                    => @db,
-      :display               => @display,
-      :edit                  => @edit,
-      :explorer              => @explorer,
-      :ght_type              => @ght_type,
-      :gtl_buttons           => @gtl_buttons,
-      :gtl_type              => @gtl_type,
-      :html                  => @html,
-      :is_redhat             => @is_redhat,
-      :lastaction            => @lastaction,
-      :layout                => @layout,
-      :miq_request           => @miq_request,
-      :msg_title             => @msg_title,
-      :perf_options          => @perf_options,
-      :policy                => @policy,
-      :pxe_image_types_count => @pxe_image_types_count,
-      :record                => @record,
-      :report                => @report,
-      :report_result_id      => @report_result_id,
-      :resolve               => @resolve,
-      :sb                    => @sb,
-      :selected_zone         => @selected_zone,
-      :settings              => @settings,
-      :showtype              => @showtype,
-      :tabform               => @tabform,
-      :widget_running        => @widget_running,
-      :widgetsets            => @widgetsets,
-      :zgraph                => @zgraph,
-    )
+    @toolbar_builder ||=
+      ToolbarBuilder.new(
+        self,
+        binding,
+        :active                => @active,
+        :button_group          => @button_group,
+        :changed               => @changed,
+        :condition             => @condition,
+        :condition_policy      => @condition_policy,
+        :db                    => @db,
+        :display               => @display,
+        :edit                  => @edit,
+        :explorer              => @explorer,
+        :ght_type              => @ght_type,
+        :gtl_buttons           => @gtl_buttons,
+        :gtl_type              => @gtl_type,
+        :html                  => @html,
+        :is_redhat             => @is_redhat,
+        :lastaction            => @lastaction,
+        :layout                => @layout,
+        :miq_request           => @miq_request,
+        :msg_title             => @msg_title,
+        :perf_options          => @perf_options,
+        :policy                => @policy,
+        :pxe_image_types_count => @pxe_image_types_count,
+        :record                => @record,
+        :report                => @report,
+        :report_result_id      => @report_result_id,
+        :resolve               => @resolve,
+        :sb                    => @sb,
+        :selected_zone         => @selected_zone,
+        :settings              => @settings,
+        :showtype              => @showtype,
+        :tabform               => @tabform,
+        :widget_running        => @widget_running,
+        :widgetsets            => @widgetsets,
+        :zgraph                => @zgraph,
+      )
+
+    @toolbar_builder
   end
 
   # Convert a field (Vm.hardware.disks-size) to a col (disks.size)
@@ -1225,8 +1228,21 @@ module ApplicationHelper
   end
 
   def x_gtl_view_tb_render?
-    no_gtl_view_buttons = %w(chargeback miq_ae_class miq_ae_customization miq_ae_tools miq_capacity_planning
-                             miq_capacity_utilization miq_policy miq_policy_rsop report ops provider_foreman pxe)
+    no_gtl_view_buttons = %w(
+      chargeback
+      generic_object
+      miq_ae_class
+      miq_ae_customization
+      miq_ae_tools
+      miq_capacity_planning
+      miq_capacity_utilization
+      miq_policy
+      miq_policy_rsop
+      ops
+      provider_foreman
+      pxe
+      report
+    )
     @record.nil? && @explorer && !no_gtl_view_buttons.include?(@layout)
   end
 
