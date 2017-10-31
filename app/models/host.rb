@@ -11,6 +11,7 @@ class Host < ApplicationRecord
   include NewWithTypeStiMixin
   include TenantIdentityMixin
   include DeprecationMixin
+  include CustomActionsMixin
 
   VENDOR_TYPES = {
     # DB            Displayed
@@ -228,6 +229,11 @@ class Host < ApplicationRecord
       _log.warn("Error raising EVM Event: [#{event}, host: #{name}(#{id}), cluster: #{ems_cluster.name}(#{ems_cluster.id})], '#{err.message}'")
     end
   end
+
+  def generic_custom_buttons
+    CustomButton.buttons_for("Host")
+  end
+
   private :raise_cluster_event
 
   def validate_reboot
